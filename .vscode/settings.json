@@ -1,5 +1,5 @@
 {
-  "eslint.workingDirectories": ["./cetici-api"],
+  "eslint.workingDirectories": ["./cetici-api", "./cetici-ui"],
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "editor.formatOnPaste": true,
   "editor.formatOnSave": true

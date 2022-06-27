@@ -60,4 +60,4 @@ test/**/*.js.map
 /temp
 
 #swagger
-views/swagger.ejs
+spec/swagger.json

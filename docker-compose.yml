@@ -1,10 +1,10 @@
 # docker-compose.yml
-version: '3'
+version: "3"
 services:
   postgres:
     image: postgis/postgis:12-3.0
     ports:
-      - '5467:5432'
+      - "5467:5432"
     volumes:
       - ./docker/postgres:/docker-entrypoint-initdb.d/
     environment:
@@ -14,7 +14,14 @@ services:
     networks:
       - postgres
     restart: unless-stopped
-
+  openapi-generate:
+    profiles:
+      - openapi
+    image: openapitools/openapi-generator-cli
+    command: generate -i swagger/swagger.json -g typescript-fetch -o /local
+    volumes:
+      - ./cetici-api/spec:/swagger # mount swagger file
+      - ./cetici-ui/src/openapi-client:/local
 networks:
   postgres:
     driver: bridge

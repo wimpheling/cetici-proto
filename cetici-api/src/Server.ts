@@ -14,7 +14,6 @@ import { config } from "./config";
 import * as rest from "./controllers/rest";
 import * as pages from "./controllers/pages";
 import { MikroOrmModule } from "@tsed/mikro-orm";
-import CeticiUserInfo from "./auth/CeticiAuthUserInfo";
 import MikroOrmConfig from "./mikro-orm.config";
 import "./protocols";
 import { User } from "./entities/User";

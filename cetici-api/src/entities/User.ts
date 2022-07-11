@@ -1,5 +1,6 @@
-import { Entity, PrimaryKey, Property, Unique } from "@mikro-orm/core";
-import { Email } from "@tsed/schema";
+import { Collection, Entity, OneToMany, PrimaryKey, Property, Unique } from "@mikro-orm/core";
+import { Email, Property as SchemaProperty } from "@tsed/schema";
+import { Post } from "./Post";
 
 @Entity()
 export class User {
@@ -8,9 +9,11 @@ export class User {
   }
 
   @PrimaryKey({ type: "uuid", defaultRaw: "uuid_generate_v4()" })
+  @SchemaProperty()
   id!: string;
 
   @Property()
+  @SchemaProperty()
   name!: string;
 
   @Property()
@@ -29,4 +32,7 @@ export class User {
 
   @Property({ onUpdate: () => new Date() })
   updatedAt = new Date();
+
+  @OneToMany(() => Post, (post) => post.author)
+  posts = new Collection<Post>(this);
 }

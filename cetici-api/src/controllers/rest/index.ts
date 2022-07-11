@@ -3,4 +3,6 @@
  */
 
 export * from "./AuthController";
+export * from "./GeocodingController";
 export * from "./HelloWorldController";
+export * from "./PostController.";

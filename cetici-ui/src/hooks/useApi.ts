@@ -3,21 +3,36 @@ import {
   AuthControllerApi,
   Configuration,
   DefaultConfig,
+  GeocodingControllerApi,
+  PostControllerApi,
 } from "../openapi-client";
 import { loginToken } from "./useLoginToken";
 
-const getClient = (token?: string) =>
-  new AuthControllerApi(
-    new Configuration({
-      ...DefaultConfig,
-      basePath: "http://localhost:8083",
-    })
-  );
+const getConfig = (token?: string) =>
+  new Configuration({
+    ...DefaultConfig,
+    basePath: "http://localhost:8083",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+const getAuthClient = (token?: string) =>
+  new AuthControllerApi(getConfig(token));
+const getPostClient = (token?: string) =>
+  new PostControllerApi(getConfig(token));
+const getGeocodingClient = (token?: string) =>
+  new GeocodingControllerApi(getConfig(token));
+
+const auth = ref(getAuthClient());
+const posts = ref(getPostClient());
+const geocoding = ref(getGeocodingClient());
 
 export const useApi = () => {
   watch(loginToken, (newToken) => {
-    cli.value = getClient(loginToken.value);
+    auth.value = getAuthClient(newToken);
+    posts.value = getPostClient(newToken);
+    geocoding.value = getGeocodingClient(newToken);
   });
-  const cli = ref(getClient());
-  return cli;
+  return { auth, posts, geocoding };
 };

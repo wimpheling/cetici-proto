@@ -1,12 +1,12 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import { useRouter } from "vue-router";
-import BasePageLayout from "../components/BasePageLayout.vue";
 import { useApi } from "../hooks/useApi";
 import { loginToken } from "../hooks/useLoginToken";
 import { useToast } from "primevue/usetoast";
+import PublicPageLayout from "../components/layouts/PublicPageLayout.vue";
 
-const cli = useApi();
+const { auth } = useApi();
 const router = useRouter();
 const toast = useToast();
 const email = ref(""),
@@ -16,7 +16,7 @@ const formData = ref<{
   password?: string;
 }>({});
 function login() {
-  cli.value
+  auth.value
     .authControllerLogin({
       authControllerLoginRequest: {
         email: email.value,
@@ -35,7 +35,7 @@ function login() {
 </script>
 
 <template>
-  <BasePageLayout title="Login">
+  <PublicPageLayout title="Login">
     <FormKit
       v-model="formData"
       type="form"
@@ -53,7 +53,7 @@ function login() {
     <div>
       <router-link to="/register">Create an account</router-link>
     </div>
-  </BasePageLayout>
+  </PublicPageLayout>
 </template>
 
 <style></style>

@@ -1,14 +1,18 @@
 <script setup lang="ts">
+import BasePageLayout from "./BasePageLayout.vue";
 const props = defineProps({
   title: { type: String, required: true },
 });
 </script>
 
 <template>
-  <h2>{{ props.title }}</h2>
-  <div class="container">
-    <slot></slot>
-  </div>
+  <BasePageLayout>
+    <div class="container">
+      <h2>Cetici</h2>
+      <h3 v-if="props.title">{{ props.title }}</h3>
+      <slot></slot>
+    </div>
+  </BasePageLayout>
 </template>
 
 <style>

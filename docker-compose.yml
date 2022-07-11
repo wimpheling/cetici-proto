@@ -14,14 +14,6 @@ services:
     networks:
       - postgres
     restart: unless-stopped
-  openapi-generate:
-    profiles:
-      - openapi
-    image: openapitools/openapi-generator-cli
-    command: generate -i swagger/swagger.json -g typescript-fetch -o /local
-    volumes:
-      - ./cetici-api/spec:/swagger # mount swagger file
-      - ./cetici-ui/src/openapi-client:/local
 networks:
   postgres:
     driver: bridge

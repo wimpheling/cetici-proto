@@ -1,0 +1,21 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "type": "npm",
+      "script": "dev",
+      "path": "cetici-ui",
+      "problemMatcher": [],
+      "label": "Cetici Front Vue",
+      "detail": "vite"
+    },
+    {
+      "type": "npm",
+      "script": "start",
+      "path": "cetici-api",
+      "problemMatcher": [],
+      "label": "Cetici API",
+      "detail": "babel-watch --extensions .ts src/index.ts"
+    }
+  ]
+}

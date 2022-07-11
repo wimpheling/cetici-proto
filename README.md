@@ -16,6 +16,10 @@ npm run barrels
 
 ### Update DB
 
+```
+npx mikro-orm schema:update -r
+```
+
 ## Cetici UI
 
 ### API Client

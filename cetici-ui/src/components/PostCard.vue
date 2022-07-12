@@ -1,16 +1,21 @@
 <script setup lang="ts">
-import { computed } from "vue";
+import { computed, ref } from "vue";
 import { PostListingDto } from "../openapi-client";
 import * as timeago from "timeago.js";
 import { useDistanceFormatter } from "../hooks/useDistance";
+import CommentCard from "./CommentCard.vue";
 import Card from "primevue/card";
 import Button from "primevue/button";
 import Avatar from "vue-boring-avatars";
+import CreateComment from "./CreateComment.vue";
 
 interface Props {
   post: PostListingDto;
 }
 const props = withDefaults(defineProps<Props>(), {});
+const showComments = ref(false);
+const switchShowComments = () => (showComments.value = !showComments.value);
+
 const dateTimeAgo = computed(() =>
   timeago.format(new Date(props.post.createdAt as string))
 );
@@ -49,9 +54,21 @@ const formattedDistance = computed(() =>
     </template>
     <template #footer>
       <div class="button-container">
-        <Button class="p-button-text p-button-plain" icon="pi pi-comment" />
+        <Button
+          class="p-button-text p-button-plain"
+          icon="pi pi-comment"
+          @click="switchShowComments"
+        />
         <Button class="p-button-text p-button-plain" icon="pi pi-map-marker" />
         <Button class="p-button-text p-button-plain" icon="pi pi-heart" />
+      </div>
+      <div v-if="showComments">
+        <CommentCard
+          v-for="comment in post.comments"
+          :key="comment.id"
+          :comment="comment"
+        />
+        <CreateComment :id="post.id" />
       </div>
     </template>
   </Card>

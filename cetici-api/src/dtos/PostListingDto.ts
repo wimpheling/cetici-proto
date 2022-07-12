@@ -1,4 +1,4 @@
-import { Property, Required } from "@tsed/schema";
+import { CollectionOf, Property, Required } from "@tsed/schema";
 
 export class PostLocationDto {
   @Property()
@@ -15,6 +15,24 @@ export class PostAuthorDto {
   name: string;
   @Property()
   id: string;
+}
+
+export class PostCommentDto {
+  @Property()
+  @Required()
+  id!: string;
+
+  @Property()
+  @Required()
+  createdAt: Date;
+
+  @Property()
+  @Required()
+  content!: string;
+
+  @Property()
+  @Required()
+  author!: PostAuthorDto;
 }
 
 export class PostListingDto {
@@ -41,4 +59,14 @@ export class PostListingDto {
   @Property()
   @Required()
   location!: PostLocationDto;
+
+  @CollectionOf(PostCommentDto)
+  comments?: PostCommentDto[];
 }
+
+export type FlatPostListingDto = Omit<PostListingDto, "comments" | "author" | "location"> & {
+  authorName: string;
+  authorId: string;
+  displayName: string;
+  placeId: number;
+};

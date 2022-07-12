@@ -1,12 +1,11 @@
-import { Collection, Entity, ManyToOne, OneToMany, PrimaryKey, Property } from "@mikro-orm/core";
+import { Entity, ManyToOne, PrimaryKey, Property } from "@mikro-orm/core";
 import { Property as SchemaProperty, Required } from "@tsed/schema";
 import { User } from "./User";
-import { NominatimLocation } from "./NominatimLocation";
-import { Comment } from "./Comment";
+import { Post } from "./Post";
 
 @Entity()
-export class Post {
-  constructor(data: Pick<Post, "location" | "content" | "author">) {
+export class Comment {
+  constructor(data: Pick<Comment, "content" | "author" | "parentPost" | "parentComment">) {
     Object.assign(this, data);
   }
 
@@ -18,11 +17,6 @@ export class Post {
   @SchemaProperty()
   @Required()
   content!: string;
-
-  @ManyToOne()
-  @SchemaProperty()
-  @Required()
-  location!: NominatimLocation;
 
   @Property()
   @SchemaProperty()
@@ -36,8 +30,14 @@ export class Post {
 
   @ManyToOne()
   @SchemaProperty()
+  @Required()
   author: User;
 
-  @OneToMany(() => Comment, (comment) => comment.parentPost)
-  comments = new Collection<Comment>(this);
+  @ManyToOne()
+  @SchemaProperty()
+  parentPost?: Post;
+
+  @ManyToOne()
+  @SchemaProperty()
+  parentComment?: Comment;
 }

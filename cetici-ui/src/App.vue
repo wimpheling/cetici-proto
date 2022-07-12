@@ -1,5 +1,7 @@
 <script setup lang="ts">
 // This starter template is using Vue 3 <script setup> SFCs
+
+import Toast from "primevue/toast";
 // Check out https://vuejs.org/api/sfc-script-setup.html#script-setup
 </script>
 
@@ -7,6 +9,7 @@
   <!-- <img alt="Vue logo" src="./assets/logo.png" /> -->
   <router-view></router-view>
   <!-- <HelloWorld msg="Hello Vue 3 + TypeScript + Vite" /> -->
+  <Toast />
 </template>
 
 <style>

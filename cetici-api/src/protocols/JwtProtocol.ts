@@ -21,7 +21,6 @@ export class JwtProtocol implements OnVerify {
   private readonly em!: EntityManager;
 
   async $onVerify(@Req() req: Req, @Arg(0) jwtPayload: any) {
-    console.log("aaaa", { jwtPayload });
     const user = await this.em.getRepository(User).findOne({
       id: jwtPayload.sub
     });

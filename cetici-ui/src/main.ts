@@ -24,7 +24,6 @@ const router = createRouter({
 
 router.beforeEach((to, from, next) => {
   if (to.matched.some((record) => !record.meta.public)) {
-    console.log({ loginToken }, loginToken.value);
     // this route requires auth, check if logged in
     // if not, redirect to login page.
     if (!loginToken.value) {

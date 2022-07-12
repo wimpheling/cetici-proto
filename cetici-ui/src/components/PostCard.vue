@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { computed, ref } from "vue";
-import { PostListingDto } from "../openapi-client";
+import { computed, reactive, ref } from "vue";
+import { PostCommentDto, PostListingDto } from "../openapi-client";
 import * as timeago from "timeago.js";
 import { useDistanceFormatter } from "../hooks/useDistance";
 import CommentCard from "./CommentCard.vue";
@@ -22,6 +22,12 @@ const dateTimeAgo = computed(() =>
 const formattedDistance = computed(() =>
   useDistanceFormatter(props.post.distance as number)
 );
+
+const comments = ref(props.post.comments);
+
+const pushComment = (newComment: PostCommentDto) => {
+  comments.value = [newComment, ...comments.value];
+};
 </script>
 
 <template>
@@ -64,11 +70,11 @@ const formattedDistance = computed(() =>
       </div>
       <div v-if="showComments">
         <CommentCard
-          v-for="comment in post.comments"
+          v-for="comment in comments"
           :key="comment.id"
           :comment="comment"
         />
-        <CreateComment :id="post.id" />
+        <CreateComment :id="post.id" @comment-created="pushComment" />
       </div>
     </template>
   </Card>

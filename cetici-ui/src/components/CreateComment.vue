@@ -1,10 +1,20 @@
 <script setup lang="ts">
+import { reset } from "@formkit/vue";
+import { useToast } from "primevue/usetoast";
 import { ref } from "vue";
 import { useApi } from "../hooks/useApi";
+import { PostCommentDto } from "../openapi-client";
 
 const content = ref("");
 const { comments } = useApi();
-const props = withDefaults(defineProps<{ id: string }>(), { id: "" });
+const toast = useToast();
+const props = withDefaults(
+  defineProps<{
+    id: string;
+  }>(),
+  {}
+);
+const emits = defineEmits(["commentCreated"]);
 
 const submit = () =>
   comments.value
@@ -12,16 +22,32 @@ const submit = () =>
       commentPostQueryDto: { content: content.value },
       id: props.id,
     })
-    .then(() => {
-      alert("success");
+    .then((newComment) => {
+      // emit the event
+      emits("commentCreated", newComment);
+
+      // reset the form
+      content.value = "";
+      reset("createComment");
+
+      // display notification
+      toast.add({
+        severity: "success",
+        summary: "Your comment was submitted",
+      });
     })
-    .catch(() => {
+    .catch((e) => {
       alert("Server error");
     });
 </script>
 <template>
   <h4>Add your comment</h4>
-  <FormKit type="form" submit-label="Post comment" @submit="submit">
+  <FormKit
+    id="createComment"
+    type="form"
+    submit-label="Post comment"
+    @submit="submit"
+  >
     <FormKit
       v-model="content"
       type="textarea"

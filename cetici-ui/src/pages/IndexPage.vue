@@ -13,10 +13,10 @@ const list = ref<PostListingDto[]>([]);
 const loading = ref(true);
 const fetchData = async () => {
   loading.value = true;
+
   navigator.geolocation.getCurrentPosition(
     (pos) => {
       // this.gettingLocation = false;
-      console.log({ pos });
       posts.value
         .postControllerList({
           postListingQueryDto: {
@@ -31,7 +31,6 @@ const fetchData = async () => {
           list.value = posts;
         })
         .catch((e) => {
-          console.log("err", e);
           alert("Server error");
         });
     },

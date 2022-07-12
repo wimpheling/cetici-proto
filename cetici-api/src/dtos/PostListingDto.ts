@@ -61,7 +61,8 @@ export class PostListingDto {
   location!: PostLocationDto;
 
   @CollectionOf(PostCommentDto)
-  comments?: PostCommentDto[];
+  @Required()
+  comments!: PostCommentDto[];
 }
 
 export type FlatPostListingDto = Omit<PostListingDto, "comments" | "author" | "location"> & {

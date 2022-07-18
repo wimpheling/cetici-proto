@@ -13,12 +13,13 @@ import { loginToken } from "./useLoginToken";
 const getConfig = (token?: string) =>
   new Configuration({
     ...DefaultConfig,
-    basePath: "http://localhost:8083",
+    basePath: import.meta.env.VITE_API_BASE_URL,
     headers: {
       Authorization: `Bearer ${token}`,
     },
   });
 
+// TODO: refactor
 const getAuthClient = (token?: string) =>
   new AuthControllerApi(getConfig(token));
 const getPostClient = (token?: string) =>

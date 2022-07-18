@@ -13,6 +13,13 @@ import "primevue/resources/primevue.min.css";
 import "primeicons/primeicons.css";
 import "primeflex/primeflex.css";
 
+//needed to compile openAPI client
+declare global {
+  const objectFromJSONTyped: (json: any, whatever: boolean) => object;
+  const objectToJSON: (json: any) => any;
+  const instanceOfobject: (value: any) => boolean;
+}
+
 // 3. Create the router instance and pass the `routes` option
 // You can pass in additional options here, but let's
 // keep it simple for now.
@@ -29,7 +36,6 @@ router.beforeEach((to, from, next) => {
     if (!loginToken.value) {
       next({ name: "Login" });
     } else {
-      console.log({ v: loginToken.value });
       next(); // go to wherever I'm going
     }
   } else {

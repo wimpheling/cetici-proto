@@ -2,9 +2,26 @@
 
 ## Cetici API
 
+### Install DB
+
+```
+docker compose up -d
+
+psql -h localhost -p 5467 -U postgres -W db
+(pass is postgres)
+```
+
+In the postgresql CLI:
+
+```
+CREATE EXTENSION "uuid-ossp";
+CREATE EXTENSION "postgis";
+```
+
 ### Run local server
 
 ```
+(in cetici-api folder)
 npm start
 ```
 
@@ -33,5 +50,10 @@ tools/generate-openapi-bindings.sh
 ### Dev server
 
 ```
+(in cetici-ui folder)
 npm run dev
 ```
+
+# deployment on a server
+
+- You can use postgresql as in local

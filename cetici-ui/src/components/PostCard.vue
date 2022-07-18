@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, reactive, ref } from "vue";
+import { computed, reactive, ref, watch } from "vue";
 import { PostCommentDto, PostListingDto } from "../openapi-client";
 import * as timeago from "timeago.js";
 import { useDistanceFormatter } from "../hooks/useDistance";
@@ -8,11 +8,38 @@ import Card from "primevue/card";
 import Button from "primevue/button";
 import Avatar from "vue-boring-avatars";
 import CreateComment from "./CreateComment.vue";
+import { useApi } from "../hooks/useApi";
 
 interface Props {
   post: PostListingDto;
 }
 const props = withDefaults(defineProps<Props>(), {});
+
+const { likes } = useApi();
+const isLiked = ref(props.post.liked);
+
+const like = () =>
+  likes.value
+    .likeControllerLike({
+      id: props.post.id,
+    })
+    .then(() => {
+      isLiked.value = true;
+    });
+
+const unlike = () =>
+  likes.value
+    .likeControllerUnlike({
+      id: props.post.id,
+    })
+    .then(() => {
+      isLiked.value = false;
+    });
+const switchLike = () => (isLiked.value ? unlike() : like());
+const likeIcon = computed(() =>
+  isLiked.value ? "pi pi-heart-fill" : "pi pi-heart"
+);
+
 const showComments = ref(false);
 const switchShowComments = () => (showComments.value = !showComments.value);
 
@@ -63,10 +90,15 @@ const pushComment = (newComment: PostCommentDto) => {
         <Button
           class="p-button-text p-button-plain"
           icon="pi pi-comment"
+          :label="`${comments.length || ''}`"
           @click="switchShowComments"
         />
         <Button class="p-button-text p-button-plain" icon="pi pi-map-marker" />
-        <Button class="p-button-text p-button-plain" icon="pi pi-heart" />
+        <Button
+          class="p-button-text p-button-plain"
+          :icon="likeIcon"
+          @click="switchLike"
+        />
       </div>
       <div v-if="showComments">
         <CommentCard
@@ -92,6 +124,8 @@ const pushComment = (newComment: PostCommentDto) => {
 .mycard {
   display: flex;
   align-self: stretch;
+  margin-bottom: 0.5em;
+  margin-top: 0.5em;
 }
 .mycard > .p-card-body {
   width: 100%;

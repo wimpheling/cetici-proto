@@ -6,4 +6,5 @@ export * from "./AuthController";
 export * from "./CommentController";
 export * from "./GeocodingController";
 export * from "./HelloWorldController";
+export * from "./LikeController";
 export * from "./PostController.";

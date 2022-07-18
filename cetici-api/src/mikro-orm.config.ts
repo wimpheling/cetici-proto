@@ -5,7 +5,7 @@ import { TsMorphMetadataProvider } from "@mikro-orm/reflection";
 const MikroOrmConfig: Partial<MikroORMOptions<PostgreSqlDriver>> = {
   contextName: "default",
   type: "postgresql",
-  dbName: "db2", // TODO make dynamic
+  dbName: "db", // TODO make dynamic
   entities: [`./src/entities/*{.ts,.js}`],
   entitiesTs: [`./src/entities/*{.ts,.js}`],
   port: 5467,

@@ -6,6 +6,7 @@ import {
   GeocodingControllerApi,
   PostControllerApi,
   CommentControllerApi,
+  LikeControllerApi,
 } from "../openapi-client";
 import { loginToken } from "./useLoginToken";
 
@@ -26,11 +27,14 @@ const getGeocodingClient = (token?: string) =>
   new GeocodingControllerApi(getConfig(token));
 const getCommentClient = (token?: string) =>
   new CommentControllerApi(getConfig(token));
+const getLikeClient = (token?: string) =>
+  new LikeControllerApi(getConfig(token));
 
-const auth = ref(getAuthClient());
-const posts = ref(getPostClient());
-const geocoding = ref(getGeocodingClient());
-const comments = ref(getCommentClient());
+const auth = ref(getAuthClient(loginToken.value));
+const posts = ref(getPostClient(loginToken.value));
+const geocoding = ref(getGeocodingClient(loginToken.value));
+const comments = ref(getCommentClient(loginToken.value));
+const likes = ref(getLikeClient(loginToken.value));
 
 export const useApi = () => {
   watch(loginToken, (newToken) => {
@@ -38,6 +42,7 @@ export const useApi = () => {
     posts.value = getPostClient(newToken);
     geocoding.value = getGeocodingClient(newToken);
     comments.value = getCommentClient(newToken);
+    likes.value = getLikeClient(newToken);
   });
-  return { auth, posts, geocoding, comments };
+  return { auth, posts, geocoding, comments, likes };
 };

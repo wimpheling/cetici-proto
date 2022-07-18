@@ -29,6 +29,7 @@ router.beforeEach((to, from, next) => {
     if (!loginToken.value) {
       next({ name: "Login" });
     } else {
+      console.log({ v: loginToken.value });
       next(); // go to wherever I'm going
     }
   } else {
@@ -41,4 +42,4 @@ createApp(App)
   .use(PrimeVue)
   .use(ToastService)
   .use(plugin, defaultConfig)
-  .mount("#app");
+  .mount("body");

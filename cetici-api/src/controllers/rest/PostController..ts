@@ -23,25 +23,26 @@ export class PostController {
   @Authenticate("jwt", { session: false })
   @Security("jwt")
   @Returns(200, Array).Of(PostListingDto)
-  async list(@BodyParams() data: PostListingQueryDto): Promise<PostListingDto[]> {
-    const qb = this.em.getRepository(NominatimLocation).createQueryBuilder("l");
-    qb.select([
-      "placeId",
-      "displayName",
-      "l.last_updated_post_id as id",
-      "p.content",
-      "p.createdAt",
-      "author.id as authorId",
-      "author.name as authorName",
-      qb.raw("ST_Distance(l.location, ST_MakePoint(?, ?)::geography) as distance", [data.location.longitude, data.location.latitude])
-    ])
-      .join("l.lastUpdatedPost", "p")
-      .join("p.author", "author")
-      .orderBy({
-        "ST_Distance(l.location, ST_MakePoint(?, ?)::geography)": "ASC"
-      });
-    const results = await qb.execute<FlatPostListingDto[]>();
-    return this.postService.getPostDtoWithComments(results);
+  async list(@BodyParams() data: PostListingQueryDto, @Req("user") user: User): Promise<PostListingDto[]> {
+    const results = await this.postService.getPostsByLocation({
+      latitude: data.location.latitude,
+      longitude: data.location.longitude,
+      userId: user.id
+    });
+    return this.postService.getPostDtoWithComments(results.rows);
+  }
+
+  @PostVerb("/liked")
+  @Authenticate("jwt", { session: false })
+  @Security("jwt")
+  @Returns(200, Array).Of(PostListingDto)
+  async liked(@BodyParams() data: PostListingQueryDto, @Req("user") user: User): Promise<PostListingDto[]> {
+    const results = await this.postService.getLikedPosts({
+      latitude: data.location.latitude,
+      longitude: data.location.longitude,
+      userId: user.id
+    });
+    return this.postService.getPostDtoWithComments(results.rows);
   }
 
   @PostVerb("/create")

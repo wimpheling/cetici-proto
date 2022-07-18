@@ -9,14 +9,15 @@ import Toast from "primevue/toast";
   <!-- <img alt="Vue logo" src="./assets/logo.png" /> -->
   <router-view></router-view>
   <!-- <HelloWorld msg="Hello Vue 3 + TypeScript + Vite" /> -->
-  <Toast />
+  <Toast :breakpoints="{ '920px': { width: '100%', right: '0', left: '0' } }" />
 </template>
 
 <style>
-#app {
+body {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
+  margin: 0;
 }
 </style>

@@ -28,6 +28,10 @@ function logout() {
   loginToken.value = undefined;
   router.push({ name: "Login" });
 }
+
+const goto = (name: string) => {
+  router.push({ name });
+};
 </script>
 
 <template>
@@ -47,13 +51,22 @@ function logout() {
         <slot></slot>
       </div>
     </div>
+    <div class="bottom-bar">
+      <div class="inside">
+        <Button icon="pi pi-wifi p-button-link" @click="goto('Home')" />
+        <Button icon="pi pi-heart p-button-link" @click="goto('Liked')" />
+        <Button icon="pi pi-search p-button-link" />
+        <Button icon="pi pi-plus p-button-link" @click="goto('LocatePost')" />
+      </div>
+    </div>
   </BasePageLayout>
 </template>
 
-<style>
+<style scoped>
 .container {
   flex-direction: column;
   display: flex;
+  margin-bottom: 5em;
 }
 .content {
   max-width: 1200px;
@@ -61,9 +74,30 @@ function logout() {
   flex-direction: column;
   width: 100%;
   align-self: center;
+  padding: 1em;
 }
 
 .menubar {
   width: 100%;
+}
+
+.bottom-bar {
+  height: 4em;
+  position: fixed;
+  bottom: 0;
+  width: 100vw;
+  padding: 1em;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  background-color: white;
+}
+.inside {
+  align-self: center;
+  width: 100vw;
+  max-width: 1200px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 }
 </style>

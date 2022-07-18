@@ -1,6 +1,7 @@
 import LoginPage from "./pages/LoginPage.vue";
 import RegisterPage from "./pages/RegisterPage.vue";
 import IndexPage from "./pages/IndexPage.vue";
+import LikedPage from "./pages/LikedPage.vue";
 import CreatePostPage from "./pages/CreatePost/CreatePostPage.vue";
 import ResolveGeolocation from "./pages/CreatePost/ResolveGeolocation.vue";
 
@@ -28,6 +29,11 @@ export const routes = [
     name: "Home",
     path: "/",
     component: IndexPage,
+  },
+  {
+    name: "Liked",
+    path: "/liked",
+    component: LikedPage,
   },
   {
     name: "CreatePost",

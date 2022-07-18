@@ -63,6 +63,9 @@ export class PostListingDto {
   @CollectionOf(PostCommentDto)
   @Required()
   comments!: PostCommentDto[];
+
+  @Property()
+  liked: boolean;
 }
 
 export type FlatPostListingDto = Omit<PostListingDto, "comments" | "author" | "location"> & {

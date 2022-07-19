@@ -6,8 +6,8 @@ const MikroOrmConfig: Partial<MikroORMOptions<PostgreSqlDriver>> = {
   contextName: "default",
   type: "postgresql",
   dbName: "db", // TODO make dynamic
-  entities: [`./src/entities/*{.ts,.js}`],
-  entitiesTs: [`./src/entities/*{.ts,.js}`],
+  entities: [`./dist/entities/*.js`],
+  entitiesTs: [`./src/entities/*.ts`],
   // TODO use env variables
   port: 5467,
   password: "postgres",

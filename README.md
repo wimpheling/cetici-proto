@@ -57,3 +57,13 @@ npm run dev
 # deployment on a server
 
 - You can use postgresql as in local
+
+to copy the server from local
+
+run
+
+```
+npm run build
+scp -r -i ~/.ssh/mespropresrecherches.pem ./cetici-api/dist ubuntu@13.38.23.28:~/cetici-proto/cetici-api
+scp -r -i ~/.ssh/mespropresrecherches.pem ./cetici-api/temp ubuntu@13.38.23.28:~/cetici-proto/cetici-api
+```

@@ -22,6 +22,8 @@ if (loginToken.value) {
       loginToken.value = "";
       loading.value = false;
     });
+} else {
+  loading.value = false;
 }
 </script>
 

@@ -66,4 +66,5 @@ run
 npm run build
 scp -r -i ~/.ssh/mespropresrecherches.pem ./cetici-api/dist ubuntu@13.38.23.28:~/cetici-proto/cetici-api
 scp -r -i ~/.ssh/mespropresrecherches.pem ./cetici-api/temp ubuntu@13.38.23.28:~/cetici-proto/cetici-api
+scp -r -i ~/.ssh/mespropresrecherches.pem ./cetici-ui/src/openapi-client ubuntu@13.38.23.28:~/cetici-proto/cetici-ui/src
 ```
